@@ -123,13 +123,20 @@ This project analyzes animal-related complaints submitted through Boston's 311 a
 .
 ├── README.md               # This midterm report
 ├── notebooks/              # Analysis notebooks
-│   └── animal_complaints_analysis.py  # Main analysis script
+│   ├── animal_complaints_analysis.py  # Main analysis script
+│   └── Anupam_EDA/         # Anupam's exploratory data analysis
+│       ├── neighborhood_analysis.ipynb
+│       ├── response_time_analysis.ipynb
+│       └── text_mining.ipynb
 ├── outputs/                # Generated analysis outputs
 │   ├── cleaned_animal_complaints.csv  # Cleaned data
 │   ├── analysis_report.md  # Comprehensive findings report
-│   └── *.png               # Visualizations
+│   ├── neighborhood_heatmap.png       # Neighborhood complaint density
+│   ├── response_time_boxplot.png      # Response time distributions
+│   ├── complaint_wordcloud.png        # Text analysis visualization
+│   └── *.png               # Other visualizations
 └── *.csv                   # Raw data files (2015.csv through 2019.csv)
-```
+.
 
 ## Project Team
 - Biswajit Satapathy
