@@ -84,6 +84,26 @@ This project analyzes animal-related complaints submitted through Boston's 311 a
 
 ![Geographic Clusters](outputs/geographic_clusters.png)
 
+#### Geographic Distribution of Animal Complaints
+
+The heatmap below shows the density of animal complaints across Boston neighborhoods from 2020-2024. Higher concentrations (yellow to red areas) are visible in downtown Boston, with notable hotspots in specific neighborhoods.
+
+![Heatmap of Animal Complaints](Anupam_EDA/heatmap_animal_complaints_overall.png)
+
+#### Complaint Types Analysis
+
+We identified the top three animal complaint categories as:
+1. Animal Generic Request
+2. Animal Found
+3. Animal Lost
+
+The visualization below shows the geographic distribution of these three complaint types, revealing distinct patterns:
+- Animal Generic Requests are widespread across the city with higher concentrations in central Boston
+- Animal Found reports show a more dispersed pattern with fewer hotspots
+- Animal Lost reports are concentrated in residential areas, particularly in southern and eastern neighborhoods
+
+![Geographic Distribution by Complaint Type](Anupam_EDA/complaint_type_geography.png)
+
 ### Seasonal Patterns
 - **Summer**: Highest volume with 12,216 complaints (33.2%)
 - **Spring**: 9,289 complaints (25.2%)
@@ -123,13 +143,20 @@ This project analyzes animal-related complaints submitted through Boston's 311 a
 .
 ├── README.md               # This midterm report
 ├── notebooks/              # Analysis notebooks
-│   └── animal_complaints_analysis.py  # Main analysis script
+│   ├── animal_complaints_analysis.py  # Main analysis script
+│   └── Anupam_EDA/         # Anupam's exploratory data analysis
+│       ├── neighborhood_analysis.ipynb
+│       ├── response_time_analysis.ipynb
+│       └── text_mining.ipynb
 ├── outputs/                # Generated analysis outputs
 │   ├── cleaned_animal_complaints.csv  # Cleaned data
 │   ├── analysis_report.md  # Comprehensive findings report
-│   └── *.png               # Visualizations
+│   ├── neighborhood_heatmap.png       # Neighborhood complaint density
+│   ├── response_time_boxplot.png      # Response time distributions
+│   ├── complaint_wordcloud.png        # Text analysis visualization
+│   └── *.png               # Other visualizations
 └── *.csv                   # Raw data files (2015.csv through 2019.csv)
-```
+.
 
 ## Project Team
 - Biswajit Satapathy
