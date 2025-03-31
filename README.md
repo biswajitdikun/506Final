@@ -1,65 +1,139 @@
-# 506Final
+# Boston 311 Animal Complaints Analysis - Midterm Report
 
-# Description of the Project
+## Project Overview
 
-The project aims to analyze animal-related complaints submitted through Boston’s 311 app. The analysis will focus on identifying trends in complaint volumes, types of animals involved, geographic patterns, and seasonal variations. The goal is to provide actionable insights to the Citywide Analytics Team for improving city operations and addressing the concerns strategically.
+This project analyzes animal-related complaints submitted through Boston's 311 app from 2015-2019. We aim to identify trends in complaint volumes, types of animals involved, geographic patterns, and seasonal variations to provide actionable insights for the Citywide Analytics Team.
 
-# Clear Goals
-- Analyze the total number of animal complaints over the past 2, 5, and 10 years to identify trends (e.g., increasing or decreasing).
-- Categorize complaints by animal type (e.g., rats, dogs, cats) to determine which animals are most commonly reported.
-- Map geographic hotspots for complaints and explore correlations between complaint types and locations.
-- Examine how seasonal factors (e.g., weather or time of year) influence complaint volumes and types.
+## Data Processing
 
-# Data Collection
+### Data Source and Collection
+- We obtained 5 years of Boston's 311 service request data (2015-2019) in CSV format
+- Each file contains a full year of complaint data with attributes including timestamps, locations, and descriptions
+- Total raw data: 1,199,657 records across all service request types
 
-## Data Source:
-- The primary dataset will be the "311 Service Requests" dataset from Boston’s Analyze Boston platform, along with its accompanying data dictionary.
-- Weather data from publicly available sources (e.g., NOAA or Weather Underground) to study seasonal impacts. 
+### Data Cleaning and Preprocessing
+1. **Filtering Animal Complaints**:
+   - Extracted animal-related complaints using keyword matching in case titles
+   - Keywords included: Animal, Dog, Cat, Rat, Wildlife, Bird, etc.
+   - Resulted in 36,803 animal-related complaints (approximately 3% of all service requests)
 
-## Collection Method:
-- Download historical datasets from Analyze Boston's open data portal.
-- If necessary, integrate weather data to study seasonal impacts.
+2. **Handling Missing Values**:
+   - Removed records with missing geographic coordinates (essential for spatial analysis)
+   - Converted date strings to datetime objects for temporal analysis
 
-## Data Fields Needed:
-- Date and time of complaint submission.
-- Complaint type/category.
-- Description of the issue.
-- Geographic location (latitude/longitude or neighborhood).
-- Weather conditions (if integrated).
+3. **Feature Engineering**:
+   - Created derived time features: year, month, day of week, quarter, and season
+   - Classified animal types by analyzing case titles and subject fields
+   - Added geographic cluster assignments based on location coordinates
 
-# Data Modeling Plan
+4. **Data Structure**:
+   - The cleaned dataset contains all original fields plus the derived features
+   - Saved as a processed CSV file (17.8 MB) for further analysis
 
-## Preprocessing:
-- Clean and preprocess the data by handling missing values, removing duplicates, and standardizing complaint categories.
-- Geocode addresses if latitude/longitude is missing.
+## Modeling Methods
 
-## Modeling Techniques:
-- Clustering: Use clustering algorithms (e.g., K-Means) to group complaints based on geographic locations.
-- Trend Analysis: Apply time-series models to detect patterns in complaint volumes over different time periods.
-- Correlation Analysis: Explore relationships between complaint types, seasons, and geographic areas using statistical methods.
-- Predictive Models (Extensions): Use decision trees or XGBoost to predict future complaint volumes based on historical trends and external factors like weather.
+### Temporal Analysis
+- **Time Series Aggregation**: Grouped complaints by year, month, day of week, and season
+- **Trend Analysis**: Analyzed year-over-year changes in complaint volumes
+- **Seasonal Decomposition**: Identified seasonal patterns in monthly data
 
-# Data Visualization Plan
-- Heatmap: Visualize geographic hotspots for animal complaints using tools like ArcGIS or Power BI.
-- Time-Series Graphs: Show trends in complaint volumes over time (monthly/yearly).
-- Bar Charts: Highlight the distribution of complaints by animal type.
-- Scatter Plots: Explore relationships between seasonal factors (e.g., temperature) and complaint volumes.
-- Interactive Dashboards: Build a Power BI dashboard for stakeholders to explore data dynamically.
+### Animal Type Classification
+- **Text-based Classification**: Developed a rule-based classifier to categorize complaints by animal type
+- **Hierarchical Categorization**: Primary categories include Other Animal, Cat, Rat/Rodent, and more
 
-# Test Plan
-- **Split the dataset into training and testing sets**:
+### Geographic Clustering
+- **K-means Clustering**: Applied K-means algorithm to identify geographic hotspots
+- **Parameters**:
+  - Number of clusters: 5 (chosen based on preliminary testing)
+  - Features used: Latitude and longitude coordinates
+  - Distance metric: Euclidean distance
+  - Standardization: Applied StandardScaler to normalize coordinates
+- **Cross-tabulation**: Analyzed animal types within each geographic cluster
 
-    Use 80% of the data for training and 20% for testing.
-- **Temporal Validation**:
+### Seasonal Patterns
+- **Seasonal Grouping**: Categorized months into four seasons
+- **Cross-tabulation**: Analyzed animal types by season
+- **Correlation Analysis**: Examined relationships between seasons and complaint volumes
 
-    Train models on data from earlier years (e.g., 2015–2020) and test on more recent years (e.g., 2021–2024).
-- **Performance Metrics**:
+## Preliminary Results
 
-    Evaluate model accuracy using metrics like RMSE for predictive models or silhouette scores for clustering.
+### Temporal Trends
+- **Annual Growth**: Animal complaints increased from 6,051 in 2015 to 8,651 in 2019 (43% increase)
+- **Monthly Patterns**: Summer months consistently show the highest complaint volumes
+- **Day of Week**: Weekdays have more complaints than weekends
 
-# Final Deliverables
-- Cleaned datasets and all code uploaded to a designated platform with a detailed README file.
-- A comprehensive final report covering:
-    Key findings and insights from the analysis.
-- Methodology used for data cleaning, modeling, and visualization.
-- A presentation summarizing key insights with visualizations such as heatmaps, bar charts, and dashboards.
+![Yearly Complaints](outputs/yearly_complaints.png)
+
+### Animal Type Distribution
+- **Major Categories**:
+  - "Other Animal": 89.7% (33,005 complaints)
+  - "Cat": 9.6% (3,522 complaints)
+  - "Rat/Rodent": 0.7% (276 complaints)
+- The high percentage of "Other Animal" category suggests further refinement is needed
+
+![Animal Types](outputs/animal_type_complaints.png)
+
+### Geographic Clusters
+- **5 Distinct Clusters** identified across Boston's neighborhoods
+- **Cluster Characteristics**:
+  - Cluster 0: 7,928 complaints (predominantly "Other Animal")
+  - Cluster 1: 7,658 complaints (predominantly "Other Animal")
+  - Cluster 2: 2,632 complaints (predominantly "Other Animal")
+  - Cluster 3: 8,204 complaints (predominantly "Other Animal")
+  - Cluster 4: 6,583 complaints (predominantly "Other Animal")
+
+![Geographic Clusters](outputs/geographic_clusters.png)
+
+### Seasonal Patterns
+- **Summer**: Highest volume with 12,216 complaints (33.2%)
+- **Spring**: 9,289 complaints (25.2%)
+- **Fall**: 7,039 complaints (19.1%)
+- **Winter**: Lowest volume with 5,463 complaints (14.8%)
+- All seasons show "Other Animal" as the predominant category
+
+![Seasonal Patterns](outputs/seasonal_pattern.png)
+
+## Key Insights and Next Steps
+
+### Key Insights
+1. **Growing Concern**: The 43% increase in animal complaints over 5 years suggests this is a growing issue requiring attention
+2. **Seasonal Focus**: Summer requires significantly more resources for animal control
+3. **Geographic Targeting**: The 5 identified clusters provide clear targets for intervention
+4. **Category Refinement**: The large "Other Animal" category needs further investigation
+
+### Next Steps
+1. **Refine Animal Classification**:
+   - Develop a more granular classification method using NLP techniques
+   - Analyze the "case_title" and "closure_reason" fields for more details
+
+2. **Weather Correlation Analysis**:
+   - Obtain weather data for Boston (2015-2019)
+   - Analyze correlations between temperature, precipitation, and complaint volumes
+
+3. **Predictive Modeling**:
+   - Develop time series forecasting models to predict future complaint volumes
+   - Use machine learning to predict geographic hotspots
+
+4. **Advanced Spatial Analysis**:
+   - Incorporate neighborhood demographic data
+   - Analyze relationships between animal complaints and other factors (population density, income, etc.)
+
+## Project Structure
+```
+.
+├── README.md               # This midterm report
+├── notebooks/              # Analysis notebooks
+│   └── animal_complaints_analysis.py  # Main analysis script
+├── outputs/                # Generated analysis outputs
+│   ├── cleaned_animal_complaints.csv  # Cleaned data
+│   ├── analysis_report.md  # Comprehensive findings report
+│   └── *.png               # Visualizations
+└── *.csv                   # Raw data files (2015.csv through 2019.csv)
+```
+
+## Project Team
+- Biswajit Satapathy
+- Anupam Chetia
+- Roman Bukhovko
+- Pranshu Swaroop
+- Syed Adnan
