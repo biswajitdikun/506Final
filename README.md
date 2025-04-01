@@ -146,8 +146,15 @@ We developed a live dashboard to explore animal-related cases using Dash + Plotl
 •	Filter by animal case type
 •	View time series plots of complaint volumes
 •	Explore case locations on an interactive map
-To run the dashboard:
-python dashboard.py
+
+
+### To run the dashboard: <br/>
+   ```python dashboard.py```
+
+
+
+https://github.com/user-attachments/assets/0995a8be-aaf2-4eb7-922c-3f928588e00e
+
 
 ## Key Insights and Next Steps
 
@@ -184,6 +191,11 @@ python dashboard.py
 │       ├── neighborhood_analysis.ipynb
 │       ├── response_time_analysis.ipynb
 │       └── text_mining.ipynb
+|   └── Pranshu_EDA/         # Pranshu's exploratory data analysis
+│       ├── animal_case_plots
+│       ├── 2025.ipynb
+│       ├── dash.py
+|       └── data.csv
 ├── outputs/                # Generated analysis outputs
 │   ├── cleaned_animal_complaints.csv  # Cleaned data
 │   ├── analysis_report.md  # Comprehensive findings report
